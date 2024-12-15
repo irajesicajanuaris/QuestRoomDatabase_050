@@ -2,7 +2,7 @@ package com.example.pertemuan10.repository
 
 import com.example.pertemuan10.data.dao.MahasiswaDao
 import com.example.pertemuan10.data.entity.Mahasiswa
-import java.util.concurrent.Flow
+import kotlinx.coroutines.flow.Flow
 
 class LocalRepositoryMhs(
     private val mahasiswaDao: MahasiswaDao
@@ -12,8 +12,19 @@ class LocalRepositoryMhs(
         mahasiswaDao.insertMahasiswa(mahasiswa)
     }
 
-    fun getAllMhs(): Flow<List<Mahasiswa>>
-    fun getMhs(nim: String): Flow<Mahasiswa>
-    suspend fun deleteMhs(mahasiswa: Mahasiswa)
-    suspend fun updateMhs(mahasiswa: Mahasiswa)
+    override fun getAllMhs () : Flow<List<Mahasiswa>>{
+        return mahasiswaDao.getAllMahasiswa()
+    }
+
+    override fun getMhs (nim: String) : Flow<Mahasiswa>{
+        return mahasiswaDao.getMahasiswa(nim)
+    }
+
+    override suspend fun deleteMhs (mahasiswa: Mahasiswa){
+        mahasiswaDao.deleteMahasiswa(mahasiswa)
+    }
+
+    override suspend fun updateMhs (mahasiswa: Mahasiswa){
+        mahasiswaDao.updateMahasiswa(mahasiswa)
+        }
 }
