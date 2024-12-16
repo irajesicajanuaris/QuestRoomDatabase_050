@@ -14,7 +14,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.room.Update
 import com.example.monitoringapplication.ui.costumwidget.TopAppBar
 import com.example.pertemuan10.ui.viewmodel.PenyediaViewModel
 import com.example.pertemuan10.ui.viewmodel.UpdateMhsViewModel
@@ -53,12 +52,13 @@ fun UpdateMhsView(
 
     Scaffold (
         modifier = modifier,
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }//tempatkan snackbar di scaffold
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }, //tempatkan snackbar di scaffold
         topBar = {
             TopAppBar(
                 judul = "Edit Mahasiswa",
                 showBackButton = true,
                 onBack = onBack,
+                modifier = Modifier
             )
         }
     ){ padding ->
@@ -69,7 +69,7 @@ fun UpdateMhsView(
                 .padding(16.dp)
         ){
 
-            // idi body
+            // isi body
             InsertBodyMhs(
                 uiState = uiState,
                 onValueChange = { updateEvent ->
