@@ -21,7 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,7 +32,6 @@ import com.example.pertemuan10.ui.viewmodel.MahasiswaEvent
 import com.example.pertemuan10.ui.viewmodel.MahasiswaViewModel
 import com.example.pertemuan10.ui.viewmodel.MhsUIState
 import com.example.pertemuan10.ui.viewmodel.PenyediaViewModel
-import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.launch
 
 object DestinasiInsert : AlamatNavigasi{
@@ -230,7 +228,8 @@ fun InsertMhsView(
             TopAppBar(
                 onBack = onBack,
                 showBackButton = true,
-                judul = "Tambah Mahasiswa"
+                judul = "Tambah Mahasiswa",
+                modifier = modifier
             )
             // isi body
             InsertBodyMhs(
