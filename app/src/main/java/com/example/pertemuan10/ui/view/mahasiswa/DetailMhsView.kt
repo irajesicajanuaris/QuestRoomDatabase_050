@@ -45,15 +45,14 @@ fun DetailMhsView(
     viewModel: DetailMhsViewModel = viewModel(factory = PenyediaViewModel.Factory),
     onBack: () -> Unit = { },
     onEditClick: (String) -> Unit = { },
-    onDeleteClick: () -> Unit = { }
+    onDeleteClick: () -> Unit = { },
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
                 judul = "Detail Mahasiswa",
                 showBackButton = true,
-                onBack = onBack,
-                modifier = modifier
+                onBack = onBack
             )
         },
         floatingActionButton = {
@@ -109,15 +108,16 @@ fun BodyDetailMhs(
             ){
                 ItemDetailMhs(
                     mahasiswa = detailUiState.detailUiEvent.toMahasiswaEntity(),
-                    modifier = Modifier
+                    modifier = modifier
                 )
                 Spacer(modifier = Modifier.padding(8.dp))
                 Button(
                     onClick = {
                         deleteConfirmationRequired = true
                     },
-                    modifier = Modifier.fillMaxWidth()
-                ) { Text(text = "Delete")
+                    modifier = modifier.fillMaxWidth()
+                ) {
+                    Text(text = "Delete")
                 }
                 if (deleteConfirmationRequired) {
                     DeleteConfirmationDialog(
@@ -126,7 +126,7 @@ fun BodyDetailMhs(
                             onDeleteClick()
                         },
                         onDeleteCancel = {deleteConfirmationRequired = false},
-                        modifier = Modifier.padding(8.dp)
+                        modifier = modifier.padding(8.dp)
                     )
                 }
             }
@@ -145,6 +145,7 @@ fun BodyDetailMhs(
         }
     }
 }
+
 
 @Composable
 fun ItemDetailMhs(
@@ -174,8 +175,6 @@ fun ItemDetailMhs(
             ComponentDetailMhs(judul = "Kelas", isinya = mahasiswa.kelas)
             Spacer(modifier = Modifier.padding(4.dp))
             ComponentDetailMhs(judul = "Angkatan", isinya = mahasiswa.angkatan)
-            Spacer(modifier = Modifier.padding(4.dp))
-
         }
     }
 }
@@ -187,7 +186,7 @@ fun ComponentDetailMhs(
     isinya: String,
 ){
     Column (
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
 
         horizontalAlignment = Alignment.Start
     ){
@@ -212,7 +211,7 @@ private fun DeleteConfirmationDialog(
     AlertDialog(onDismissRequest = { /* Do nothiing */},
         title = { Text("Delete Data") },
         text = { Text("Apakah anda yakin ingin menghapus data?") },
-        modifier = Modifier,
+        modifier = modifier,
         dismissButton = {
             TextButton(onClick = onDeleteCancel) {
                 Text(text = "Cancel")
@@ -223,5 +222,4 @@ private fun DeleteConfirmationDialog(
                 Text(text = "Yes")
             }
         })
-
 }

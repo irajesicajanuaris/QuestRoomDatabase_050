@@ -11,6 +11,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
@@ -64,7 +66,7 @@ fun HomeMhsView(
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Tambah Mahasiswa",
+                    contentDescription = "Tambah Mahasiswa"
                 )
             }
         }
@@ -76,7 +78,7 @@ fun HomeMhsView(
             onClick = {
                 onDetailClick(it)
             },
-            modifier = Modifier.padding(innerPadding)
+            modifier = modifier.padding(innerPadding)
         )
     }
 }
@@ -120,7 +122,7 @@ fun BodyHomeMhsView(
                     text = "Tidak ada data mahasiswa.",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(16.dp)
+                    modifier = modifier.padding(16.dp)
                 )
             }
         }
@@ -193,7 +195,7 @@ fun CardMhs(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(imageVector = Icons.Filled.Person, contentDescription = "")
+                Icon(imageVector = Icons.Filled.DateRange, contentDescription = "")
                 Spacer(modifier = Modifier.padding(4.dp))
                 Text(
                     text = mhs.nim,
@@ -205,7 +207,7 @@ fun CardMhs(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(imageVector = Icons.Filled.Person, contentDescription = "")
+                Icon(imageVector = Icons.Filled.Home, contentDescription = "")
                 Spacer(modifier = Modifier.padding(4.dp))
                 Text(
                     text = mhs.kelas,

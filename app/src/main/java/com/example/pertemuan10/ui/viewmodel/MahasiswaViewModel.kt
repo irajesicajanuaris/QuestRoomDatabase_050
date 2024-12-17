@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pertemuan10.data.entity.Mahasiswa
 import com.example.pertemuan10.repository.RepositoryMhs
 import kotlinx.coroutines.launch
@@ -17,9 +16,9 @@ class MahasiswaViewModel(
     var uiState by mutableStateOf(MhsUIState())
 
     //memperbarui state berdasarkan input pengguna
-    fun updateState(mahasiswaEvent: MahasiswaEvent){
+    fun updateState(MahasiswaEvent: MahasiswaEvent){
         uiState = uiState.copy(
-            mahasiswaEvent = mahasiswaEvent,
+            mahasiswaEvent = MahasiswaEvent,
         )
     }
 

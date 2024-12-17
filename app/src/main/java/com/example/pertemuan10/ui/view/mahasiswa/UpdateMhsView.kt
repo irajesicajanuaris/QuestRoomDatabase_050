@@ -57,8 +57,7 @@ fun UpdateMhsView(
             TopAppBar(
                 judul = "Edit Mahasiswa",
                 showBackButton = true,
-                onBack = onBack,
-                modifier = Modifier
+                onBack = onBack
             )
         }
     ){ padding ->

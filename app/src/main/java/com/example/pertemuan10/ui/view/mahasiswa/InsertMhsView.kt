@@ -34,8 +34,62 @@ import com.example.pertemuan10.ui.viewmodel.MhsUIState
 import com.example.pertemuan10.ui.viewmodel.PenyediaViewModel
 import kotlinx.coroutines.launch
 
-object DestinasiInsert : AlamatNavigasi{
+object DestinasiInsert : AlamatNavigasi {
     override val route: String = "insert_mhs"
+}
+
+@Composable
+fun InsertMhsView(
+    onBack: () -> Unit,
+    onNavigate: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: MahasiswaViewModel = viewModel(factory = PenyediaViewModel.Factory)
+){
+    val uiState = viewModel.uiState
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(uiState.snackbarMessage) {
+        uiState.snackbarMessage?.let { message ->
+            coroutineScope.launch {
+                snackbarHostState.showSnackbar(message)
+                viewModel.resetSnackBarMessage()
+            }
+
+        }
+    }
+
+    Scaffold(
+        modifier = Modifier,
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(16.dp)
+        ){
+
+            TopAppBar(
+                onBack = onBack,
+                showBackButton = true,
+                judul = "Tambah Mahasiswa"
+            )
+
+            InsertBodyMhs(
+                uiState = uiState,
+                onValueChange = { updateEvent ->
+                    viewModel.updateState(updateEvent)
+                },
+                onClick = {
+                    coroutineScope.launch {
+                        viewModel.saveData()
+                    }
+                    onNavigate()
+                }
+            )
+        }
+    }
 }
 
 @Preview(showBackground = true)
@@ -47,11 +101,11 @@ fun FormMahasiswa(
     modifier: Modifier = Modifier
 ) {
     val jenisKelamin = listOf("Laki-laki", "Perempuan")
-    val kelas = listOf("A", "B", "C", "D", "E")
+    val kelas = listOf("A","B","C","D","E")
 
     Column(
-        modifier = modifier.fillMaxWidth(),
-    ) {
+        modifier = modifier.fillMaxWidth()
+    ){
 
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -74,22 +128,21 @@ fun FormMahasiswa(
             onValueChange = {
                 onValueChange(mahasiswaEvent.copy(nim = it))
             },
-            label = { Text("Nim") },
+            label = { Text("NIM") },
             isError = errorState.nim != null,
-            placeholder = { Text("Masukkan nim") },
+            placeholder = { Text("Masukkan NIM") },
         )
         Text(
             text = errorState.nim ?: "",
             color = Color.Red
         )
-
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = "Jenis Kelamin")
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
-            jenisKelamin.forEach { jk ->
-                Row(
+            jenisKelamin.forEach{ jk ->
+                Row (
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
@@ -103,8 +156,7 @@ fun FormMahasiswa(
                 }
             }
         }
-        Text(
-            text = errorState.jenisKelamin ?: "",
+        Text(text = errorState.jenisKelamin ?: "",
             color = Color.Red
         )
 
@@ -122,14 +174,13 @@ fun FormMahasiswa(
             text = errorState.alamat ?: "",
             color = Color.Red
         )
-
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = "Kelas")
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
-            kelas.forEach { kls ->
-                Row(
+            kelas.forEach{ kls ->
+                Row (
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
@@ -139,17 +190,13 @@ fun FormMahasiswa(
                             onValueChange(mahasiswaEvent.copy(kelas = kls))
                         },
                     )
-                    Text(
-                        text = kls,
-                    )
+                    Text(text = kls,)
                 }
             }
         }
-        Text(
-            text = errorState.alamat ?: "",
+        Text(text = errorState.kelas ?: "",
             color = Color.Red
         )
-
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = mahasiswaEvent.angkatan,
@@ -177,7 +224,7 @@ fun InsertBodyMhs(
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         FormMahasiswa(
             mahasiswaEvent = uiState.mahasiswaEvent,
@@ -188,62 +235,9 @@ fun InsertBodyMhs(
         Button(
             onClick = onClick,
             modifier = Modifier.fillMaxWidth(),
-
-            ) {
-            Text("Simpan")
-        }
-    }
-}
-
-@Composable
-fun InsertMhsView(
-    onBack: () -> Unit,
-    onNavigate: () -> Unit,
-    modifier: Modifier = Modifier,
-    viewModel: MahasiswaViewModel = viewModel(factory = PenyediaViewModel.Factory)
-    ) {
-    val uiState = viewModel.uiState // ambil ui state dari view model
-    val snackbarHostState = remember { SnackbarHostState() }
-    val coroutineScope = rememberCoroutineScope()
-
-    LaunchedEffect(uiState.snackbarMessage) {
-        uiState.snackbarMessage?.let { message ->
-            coroutineScope.launch {
-                snackbarHostState.showSnackbar(message)
-                viewModel.resetSnackBarMessage()
-            }
-        }
-    }
-    Scaffold(
-        modifier = Modifier,
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
-    ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(16.dp)
         ) {
+            Text("Simpan")
 
-            TopAppBar(
-                onBack = onBack,
-                showBackButton = true,
-                judul = "Tambah Mahasiswa",
-                modifier = modifier
-            )
-            // isi body
-            InsertBodyMhs(
-                uiState = uiState,
-                onValueChange = { updateEvent ->
-                    viewModel.updateState(updateEvent) // update state di view
-                },
-                onClick = {
-                    coroutineScope.launch {
-                        viewModel.saveData() // simpan data
-                    }
-                    onNavigate()
-                }
-            )
         }
     }
 }

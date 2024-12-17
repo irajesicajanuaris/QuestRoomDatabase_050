@@ -8,8 +8,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.pertemuan10.ui.navigation.AlamatNavigasi.DestinasiDetail
-import com.example.pertemuan10.ui.navigation.AlamatNavigasi.DestinasiUpdate
 import com.example.pertemuan10.ui.view.mahasiswa.DetailMhsView
 import com.example.pertemuan10.ui.view.mahasiswa.HomeMhsView
 import com.example.pertemuan10.ui.view.mahasiswa.UpdateMhsView
@@ -24,14 +22,14 @@ fun PengelolaHalaman(
 ){
     NavHost(
         navController = navController,
-        startDestination = DestinasiInsert.route
+        startDestination = DestinasiHome.route
     ){
         composable(
-            route = AlamatNavigasi.DestinasiHome.route
+            route = DestinasiHome.route
         ){
             HomeMhsView(
                 onDetailClick = { nim ->
-                    navController.navigate("${DestinasiDetail.route} /$nim")
+                    navController.navigate("${DestinasiDetail.route}/$nim")
                     println(
                         "PengelolaHalaman: nim = $nim"
                     )
@@ -51,7 +49,7 @@ fun PengelolaHalaman(
             },
                 onNavigate = {navController.popBackStack()
                 },
-                modifier = modifier,
+                modifier = modifier
                 )
         }
 
@@ -96,7 +94,7 @@ fun PengelolaHalaman(
                 onNavigate = {
                     navController.popBackStack()
                 },
-                modifier = modifier,
+                modifier = modifier
             )
         }
     }
